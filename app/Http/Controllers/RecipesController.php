@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Ingredient;
 use App\Recipe;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\MessageBag;
 
 class RecipesController extends Controller
 {
@@ -25,18 +27,6 @@ class RecipesController extends Controller
      */
     public function index(Request $request)
     {
-        /*$ingredient = Ingredient::find(1);
-
-        $recipe = new Recipe;
-        $recipe->name = "First";
-        $recipe->description = "First receipt";
-        $recipe->user_id = $request->user()->id;
-
-        $recipe->save();
-        $recipe->ingredients()->attach($ingredient, [
-            "ingredient_count" => 2
-        ]);*/
-
         return view("recipes.index", [
             "recipes" => Recipe::getAll($request)
         ]);
@@ -58,12 +48,52 @@ class RecipesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @return Response
+     * @throws Exception
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        $validator = Recipe::isValid($request->all());
+        if (!$validator->fails()) {
+            if (count($request->recipeIngredients) !== count($request->recipeIngredientsСount)) {
+                $errors = new MessageBag;
+                $errors->add("Counts not equal", "Товары и их количество должны совпадать");
+                return back()->withInput()->withErrors($errors);
+            } else {
+                $recipe = new Recipe;
+                $recipe->name = $request->name;
+                $recipe->description = $request->description;
+                $recipe->user_id = $request->user()->id;
+
+                $recipe->save();
+                for ($i = 0; $i < count($request->recipeIngredients); $i++) {
+                    if (is_null($request->recipeIngredients[$i]) || is_null($request->recipeIngredientsCount[$i])) {
+                        $recipe->delete();
+                        $errors = new MessageBag;
+                        $errors->add("Ingredient count is null", "Количество ингридиента не указано");
+                        return back()->withInput()->withErrors($errors);
+                    }
+
+                    $ingredient = Ingredient::find($request->recipeIngredients[$i]);
+
+                    if (!$ingredient) {
+                        $errors = new MessageBag;
+                        $errors->add("Ingredient not found", "Ингредиент не найден");
+                        return back()->withInput()->withErrors($errors);
+                    }
+
+                    $recipe->ingredients()->attach($ingredient, [
+                        "ingredient_count" => $request->recipeIngredientsСount[$i]
+                    ]);
+
+                    return redirect()->route("recipes.index")->with("stats", "Рецепт успешно добавлен");
+                }
+
+            }
+        } else {
+            return back()->withInput()->withErrors($validator->errors());
+        }
     }
 
     /**
@@ -91,7 +121,7 @@ class RecipesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @param  int  $id
      * @return Response
      */
@@ -108,6 +138,15 @@ class RecipesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $recipe = Recipe::find($id);
+
+        if (!$recipe) {
+            $errors = new MessageBag;
+            $errors->add("Recipe not found", "Рецепт не найден");
+            return back()->withInput()->withErrors($errors);
+        } else {
+            $recipe->delete();
+            return redirect()->route("recipes.index")->with("stats", "Рецепт успешно удален");
+        }
     }
 }
