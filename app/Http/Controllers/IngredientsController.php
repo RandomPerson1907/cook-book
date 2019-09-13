@@ -22,10 +22,10 @@ class IngredientsController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
         return view("ingredients.index", [
-            "ingredients" => Ingredient::all()
+            "ingredients" => Ingredient::getAll($request)
         ]);
     }
 
@@ -51,35 +51,44 @@ class IngredientsController extends Controller
         if (!$validator->fails()) {
             $ingredient = new Ingredient;
             $ingredient->fill($request->all());
+            $ingredient->user_id = $request->user()->id;
 
             $ingredient->save();
 
-            return redirect()->route("ingredients.index")->with("status", "Ингредиент успешно сохранен");
+            if($request->ajax()){
+                return Response::create([
+                    "result" => true,
+                    "message" => "Ингредиент успешно сохранен",
+                    "ingredient" => [
+                        "id" => $ingredient->id,
+                        "name" => $ingredient->name
+                    ]
+                ], 201);
+            } else {
+                return redirect()->route("ingredients.index")->with("status", "Ингредиент успешно сохранен");
+            }
         } else {
-            return back()->withInput()->withErrors($validator->errors());
+            if($request->ajax()){
+                return Response::create([
+                    "result" => false,
+                    "message" => $validator->errors(),
+                ]);
+            } else {
+                return back()->withInput()->withErrors($validator->errors());
+            }
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
-    {
-
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param Request $request
+     * @param int $id
      * @return Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        $ingredient = Ingredient::find($id);
+        $ingredient = Ingredient::getOne($request, $id);
 
         if (!$ingredient) {
             $errors = new MessageBag;
@@ -103,7 +112,7 @@ class IngredientsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $ingredient = Ingredient::find($id);
+        $ingredient = Ingredient::getOne($request, $id);
 
         if (!$ingredient) {
             $errors = new MessageBag;
@@ -127,12 +136,13 @@ class IngredientsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param Request $request
+     * @param int $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $ingredient = Ingredient::find($id);
+        $ingredient = Ingredient::getOne($request, $id);
 
         if (!$ingredient) {
             $errors = new MessageBag;

@@ -49,7 +49,9 @@
                         </div>
                     </div>
                     @empty
-
+                        <div class="alert alert-warning" role="alert">
+                            Ингредиенты не найдены
+                        </div>
                     @endforelse
                 </div>
             </div>

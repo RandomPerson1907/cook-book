@@ -15,6 +15,11 @@ class Ingredient extends Model
         return $this->belongsToMany(Recipe::class);
     }
 
+    public function user()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
     public static function isValid($parameters, $exceptId = false)
     {
         $validator = Validator::make($parameters, [
@@ -31,5 +36,19 @@ class Ingredient extends Model
             'name.max' => 'Максимальная длина имени ингредиента не должна превышать 191 символ',
             'name.unique' => 'Данный ингредиент уже существует'
         ];
+    }
+
+    public static function getAll($request)
+    {
+        return self::
+        where("user_id", $request->user()->id)
+            ->orderBy(isset($request->orderBy) ? $request->orderBy : "id")
+            ->paginate(isset($request->paginate) ? $request->paginate : 15);
+    }
+
+    public static function getOne($request, $id)
+    {
+        return self::where("id", "=", $id)
+            ->where("user_id", "=", $request->user()->id)->first();
     }
 }

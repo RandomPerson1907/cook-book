@@ -37,17 +37,22 @@ class RecipesController extends Controller
             "ingredient_count" => 2
         ]);*/
 
-        return view("home");
+        return view("recipes.index", [
+            "recipes" => Recipe::getAll($request)
+        ]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
+     * @param Request $request
      * @return Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        return view("recipes.create", [
+            "ingredients" => Ingredient::getAll($request)
+        ]);
     }
 
     /**
