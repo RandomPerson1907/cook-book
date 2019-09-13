@@ -1,8 +1,8 @@
 <template>
     <div class="ingredients">
-        <div class="row mt-5 pb-5 border-bottom" v-for="recipeIngredient in recipeIngredients">
+        <div class="row mt-5 pb-5 border-bottom" v-for="(recipeIngredient, recipeIndex) in recipeIngredients">
             <div class="col-md-5">
-                <select class="w-100" name="recipeIngredients[][id]">
+                <select class="w-100 form-control" name="recipeIngredients[]">
                     <option
                         v-for="(ingredient, index) in ingredients"
                         :value="ingredient.id"
@@ -10,7 +10,15 @@
                 </select>
             </div>
             <div class="col-md-3">
-
+                <input
+                    class="form-control"
+                    type="text" name="recipeIngredientsСount[]" placeholder="Введите количество...">
+            </div>
+            <div class="col-md-1">
+                <input
+                    type="button"
+                    class="form-control" @click="removeRecipeIngredient(recipeIndex)"
+                ><img class="w-100 h-100" src="/img/icons/cross.png" alt="Delete">
             </div>
         </div>
         <div class="row mt-5 pb-5 border-bottom">
@@ -24,7 +32,7 @@
                 <p class="text-right">Нет в списке?</p>
             </div>
             <div class="col-md-3">
-                <add-new-ingredient :route="route"></add-new-ingredient>
+                <add-new-ingredient :route="route" @addIngredient="addIngredient"></add-new-ingredient>
             </div>
         </div>
     </div>
@@ -47,7 +55,12 @@
         methods: {
             addIngredientForm() {
                 this.recipeIngredients.push([]);
-                console.log(this.ingredients);
+            },
+            removeRecipeIngredient(recipeIndex) {
+                this.recipeIngredients.splice(recipeIndex, 1);
+            },
+            addIngredient(ingredient) {
+                this.ingredients.push(ingredient);
             }
         }
     }

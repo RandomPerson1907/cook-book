@@ -17,7 +17,6 @@
                     </div>
                     <div class="modal-body">
                         <form :action="route" method="POST">
-                            @csrf
                         <div class="row">
                             <div class="col-md-4">
                                 <label for="ingredientInput" class="pt-1">Название</label>
@@ -57,11 +56,11 @@
                 axios.post(this.route, {
                     name : this.ingredientName
                 })
-                .then(function (response) {
-                    console.log(response)
+                .then((response) => {
+                    this.$emit("addIngredient", response.data.ingredient);
                 })
-                .catch(function (error) {
-                    console.log(error);
+                .catch((error) => {
+
                 });
             }
         }

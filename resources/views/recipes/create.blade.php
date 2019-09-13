@@ -58,7 +58,7 @@
                     >{{ old('description') }}</textarea>
                 </div>
             </div>
-            <ingredients ingredients="{{ json_encode($ingredients) }}" route="{{ route("ingredients.store") }}"></ingredients>
+            <ingredients :ingredients="{{ json_encode($ingredients->all()) }}" route="{{ route("ingredients.store") }}"></ingredients>
             <div class="row justify-content-end mt-5">
                 <div class="col-md-3">
                     <input type="submit" class="w-100 btn btn-primary" value="Сохранить рецепт">

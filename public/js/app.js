@@ -1914,13 +1914,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     addIngredient: function addIngredient() {
+      var _this = this;
+
       axios.post(this.route, {
         name: this.ingredientName
       }).then(function (response) {
-        console.log(response);
-      })["catch"](function (error) {
-        console.log(error);
-      });
+        _this.$emit("addIngredient", response.data.ingredient);
+      })["catch"](function (error) {});
     }
   }
 });
@@ -1969,6 +1969,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Ingredients",
@@ -1984,7 +1992,12 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     addIngredientForm: function addIngredientForm() {
       this.recipeIngredients.push([]);
-      console.log(this.ingredients);
+    },
+    removeRecipeIngredient: function removeRecipeIngredient(recipeIndex) {
+      this.recipeIngredients.splice(recipeIndex, 1);
+    },
+    addIngredient: function addIngredient(ingredient) {
+      this.ingredients.push(ingredient);
     }
   }
 });
@@ -37413,14 +37426,14 @@ var render = function() {
     "div",
     { staticClass: "ingredients" },
     [
-      _vm._l(_vm.recipeIngredients, function(recipeIngredient) {
+      _vm._l(_vm.recipeIngredients, function(recipeIngredient, recipeIndex) {
         return _c("div", { staticClass: "row mt-5 pb-5 border-bottom" }, [
           _c("div", { staticClass: "col-md-5" }, [
             _c(
               "select",
               {
-                staticClass: "w-100",
-                attrs: { name: "recipeIngredients[][id]" }
+                staticClass: "w-100 form-control",
+                attrs: { name: "recipeIngredients[]" }
               },
               _vm._l(_vm.ingredients, function(ingredient, index) {
                 return _c("option", { domProps: { value: ingredient.id } }, [
@@ -37431,7 +37444,23 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-md-3" })
+          _vm._m(0, true),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-1" }, [
+            _c("input", {
+              staticClass: "form-control",
+              attrs: { type: "button" },
+              on: {
+                click: function($event) {
+                  return _vm.removeRecipeIngredient(recipeIndex)
+                }
+              }
+            }),
+            _c("img", {
+              staticClass: "w-100 h-100",
+              attrs: { src: "/img/icons/cross.png", alt: "Delete" }
+            })
+          ])
         ])
       }),
       _vm._v(" "),
@@ -37448,12 +37477,17 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _vm._m(0),
+        _vm._m(1),
         _vm._v(" "),
         _c(
           "div",
           { staticClass: "col-md-3" },
-          [_c("add-new-ingredient", { attrs: { route: _vm.route } })],
+          [
+            _c("add-new-ingredient", {
+              attrs: { route: _vm.route },
+              on: { addIngredient: _vm.addIngredient }
+            })
+          ],
           1
         )
       ])
@@ -37462,6 +37496,21 @@ var render = function() {
   )
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-3" }, [
+      _c("input", {
+        staticClass: "form-control",
+        attrs: {
+          type: "text",
+          name: "recipeIngredientsСount[]",
+          placeholder: "Введите количество..."
+        }
+      })
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
