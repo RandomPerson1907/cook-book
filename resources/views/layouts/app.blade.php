@@ -18,6 +18,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+    @stack("styles")
 </head>
 <body>
     <div id="app">
@@ -72,9 +74,25 @@
             </div>
         </nav>
 
-        <main class="py-4">
-            @yield('content')
-        </main>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="offset-md-1 col-md-2">
+                    <ul class="nav flex-column">
+                        <li class="nav-item text-center">
+                            <a class="nav-link active" href="{{ route("recipes.index") }}">Мои рецепты</a>
+                        </li>
+                        <li class="nav-item text-center">
+                            <a class="nav-link" href="{{ route("ingredients.index") }}">Ингредиенты</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-9">
+                    <main class="py-4 w-100">
+                        @yield('content')
+                    </main>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

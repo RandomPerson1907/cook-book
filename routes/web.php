@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource("recipes", "RecipesController");
-Route::resource("ingredients", "IngredientsController");
-
 Auth::routes();
+
+Route::resource("recipes", "RecipesController");
+Route::resource("ingredients", "IngredientsController")->except(["show"]);
