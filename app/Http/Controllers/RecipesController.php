@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Ingredient;
+use App\Recipe;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -18,11 +20,24 @@ class RecipesController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        /*$ingredient = Ingredient::find(1);
+
+        $recipe = new Recipe;
+        $recipe->name = "First";
+        $recipe->description = "First receipt";
+        $recipe->user_id = $request->user()->id;
+
+        $recipe->save();
+        $recipe->ingredients()->attach($ingredient, [
+            "ingredient_count" => 2
+        ]);*/
+
+        return view("home");
     }
 
     /**
