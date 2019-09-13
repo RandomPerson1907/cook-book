@@ -17,6 +17,7 @@
                     </div>
                     <div class="modal-body">
                         <form :action="route" method="POST">
+                            @csrf
                         <div class="row">
                             <div class="col-md-4">
                                 <label for="ingredientInput" class="pt-1">Название</label>
