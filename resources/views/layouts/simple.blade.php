@@ -7,7 +7,9 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Кулинарная книга</title>
+
+    <link rel="icon" href="/img/icons/book.png">
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
