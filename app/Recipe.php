@@ -39,7 +39,7 @@ class Recipe extends Model
     public static function isValid($parameters, $exceptId = false)
     {
         $validator = Validator::make($parameters, [
-            "name" => "required|max:191|unique:recipes" . ($exceptId === false) ? "" : ",{$exceptId}",
+            "name" => "required|max:191",
             "description" => "required|max:40000",
         ], self::messages());
 

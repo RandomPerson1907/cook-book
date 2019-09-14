@@ -23,7 +23,7 @@ class Ingredient extends Model
     public static function isValid($parameters, $exceptId = false)
     {
         $validator = Validator::make($parameters, [
-            "name" => "required|max:191|unique:ingredients" . ($exceptId === false ? "" : ",{$exceptId}")
+            "name" => "required|max:191"
         ], self::messages());
 
         return $validator;
