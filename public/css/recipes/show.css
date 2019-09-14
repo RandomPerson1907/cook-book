@@ -1,0 +1,19 @@
+.button__add {
+  display: block;
+  width: 30px;
+  height: 30px;
+  margin-top: 12px;
+}
+
+.btn__custom {
+  width: 35px;
+  height: 35px;
+  margin-top: 12px;
+  background: none;
+  border: none;
+}
+
+.btn__custom img {
+  width: 100%;
+}
+

@@ -21,6 +21,7 @@ window.Vue = require('vue');
 
 Vue.component('ingredients', require('./components/Ingredients.vue').default);
 Vue.component('add-new-ingredient', require('./components/AddNewIngredient.vue').default);
+Vue.component('show-ingredient', require('./components/ShowIngredient.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

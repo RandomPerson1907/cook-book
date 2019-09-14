@@ -28,10 +28,10 @@
         </div>
         <div class="row mt-5">
             <div class="col-md-11">
-                <div class="ingredients data-rows">
+                <div class="recipes data-rows">
                     @forelse ($recipes as $recipe)
                         <div class="data-row ingredient row mt-3">
-                            <div class="ingredient__name data-row__name col-md-9">
+                            <div class="recipe__name data-row__name col-md-9">
                                 {{ $recipe->name }}
                             </div>
                             <div class="recipe__action data-row__action data-row__action_show recipe__action_show col-md-1 text-right">

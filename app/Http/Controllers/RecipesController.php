@@ -101,9 +101,21 @@ class RecipesController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        //
+        $recipe = Recipe::getOne($request, $id);
+
+        if (!$recipe) {
+            $errors = new MessageBag;
+            $errors->add("Not found", "Рецепт не найден");
+            return redirect()
+                ->route("recipes.index")
+                ->withErrors($errors);
+        } else {
+            return view("recipes.show", [
+                "recipe" => $recipe
+            ]);
+        }
     }
 
     /**

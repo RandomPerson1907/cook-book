@@ -16,4 +16,5 @@ mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/main.scss', 'public/css')
     .sass('resources/sass/ingredients/index.scss', 'public/css/ingredients/')
     .sass('resources/sass/ingredients/edit.scss', 'public/css/ingredients/')
-    .sass('resources/sass/recipes/create.scss', 'public/css/recipes/');
+    .sass('resources/sass/recipes/create.scss', 'public/css/recipes/')
+    .sass('resources/sass/recipes/show.scss', 'public/css/recipes/');

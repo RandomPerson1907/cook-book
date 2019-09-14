@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Ingredient;
+use App\Recipe;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\MessageBag;
@@ -153,6 +154,44 @@ class IngredientsController extends Controller
         } else {
             $ingredient->delete();
             return redirect()->route("ingredients.index")->with("status", "Ингредиент успешно удален");
+        }
+    }
+
+    public function updateCount(Request $request)
+    {
+        if($request->ajax()) {
+            if (!isset($request->count) || !isset($request->id) || !isset($request->recipeId)) {
+                return Response::create([
+                    "result" => false,
+                    "message" => "Не указано количество или идентификатор ингридиента/рецепта"
+                ]);
+            } else {
+                $recipe = Recipe::getOne($request, $request->recipeId);
+
+                if (!$recipe) {
+                    return Response::create([
+                        "result" => false,
+                        "message" => "Не удалось найти рецепт"
+                    ]);
+                }
+
+                if ($ingredient = $recipe->ingredients()->find($request->id)) {
+                    $ingredient->pivot->ingredient_count = $request->count;
+                    $ingredient->pivot->save();
+
+                    return Response::create([
+                        "result" => true,
+                        "message" => "Ингридиет успешно обновлен"
+                    ]);
+                } else {
+                    return Response::create([
+                        "result" => false,
+                        "message" => "Не удалось найти ингридиент в рецепте"
+                    ]);
+                }
+            }
+        } else {
+            return abort(403);
         }
     }
 }

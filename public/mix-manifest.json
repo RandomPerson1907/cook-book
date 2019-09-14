@@ -4,5 +4,6 @@
     "/css/main.css": "/css/main.css",
     "/css/ingredients/index.css": "/css/ingredients/index.css",
     "/css/ingredients/edit.css": "/css/ingredients/edit.css",
-    "/css/recipes/create.css": "/css/recipes/create.css"
+    "/css/recipes/create.css": "/css/recipes/create.css",
+    "/css/recipes/show.css": "/css/recipes/show.css"
 }
