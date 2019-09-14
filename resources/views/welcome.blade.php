@@ -7,7 +7,7 @@
 @section("content")
     <div class="landing-page">
         <div class="mobile-menu">
-            <a href="#home" class="logo-mobile scrollTo">
+            <a href="#" class="logo-mobile scrollTo">
                 <span></span>
             </a>
             <ul class="navbar-nav">
@@ -26,7 +26,7 @@
         <div class="main-container">
             <nav class="landing-page-nav">
                 <div class="container d-flex align-items-center justify-content-between">
-                    <a class="navbar-logo pull-left scrollTo" href="#home">
+                    <a class="navbar-logo pull-left scrollTo" href="#">
                         <span class="white"></span>
                         <span class="dark"></span>
                     </a>
@@ -162,9 +162,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <a class="btn btn-circle btn-outline-semi-light hero-circle-button scrollTo" href="#features" id="homeCircleButton"><i
-                            class="simple-icon-arrow-down"></i></a>
                 </div>
 
             </div>
