@@ -28,11 +28,25 @@
         </div>
         <div class="row mt-5">
             <div class="col-md-11">
+                <div class="row mt-3 data-row border-bottom pb-3">
+                    <div class="col-md-4">
+                        <a href="{{ route("recipes.index") }}?orderBy=name">Название</a>
+                    </div>
+                    <div class="col-md-5">
+                        <a href="{{ route("recipes.index") }}?orderBy=description">Описание</a>
+                    </div>
+                    <div class="col-md-3">
+                        Действия
+                    </div>
+                </div>
                 <div class="recipes data-rows">
                     @forelse ($recipes as $recipe)
-                        <div class="data-row ingredient row mt-3">
-                            <div class="recipe__name data-row__name col-md-9">
+                        <div class="data-row ingredient row mt-3 border-bottom">
+                            <div class="recipe__name data-row__name col-md-4">
                                 {{ $recipe->name }}
+                            </div>
+                            <div class="recipe__name data-row__name col-md-5">
+                                {{ $recipe->description }}
                             </div>
                             <div class="recipe__action data-row__action data-row__action_show recipe__action_show col-md-1 text-right">
                                 <a href="{{ route("recipes.show", $recipe->id) }}"><img src="{{ asset("/img/icons/eye.png") }}" alt="Show"></a>

@@ -17,7 +17,7 @@
                 <input
                     class="form-control"
                     type="text" name="recipeIngredientsСount[]" placeholder="Введите количество..."
-                    :value="recipeIngredient.pivot.ingredient_count"
+                    v-model="recipeIngredient.pivot.ingredient_count"
                 >
             </div>
             <div class="col-md-1">

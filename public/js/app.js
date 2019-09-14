@@ -37624,13 +37624,33 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "col-md-3" }, [
             _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: recipeIngredient.pivot.ingredient_count,
+                  expression: "recipeIngredient.pivot.ingredient_count"
+                }
+              ],
               staticClass: "form-control",
               attrs: {
                 type: "text",
                 name: "recipeIngredientsСount[]",
                 placeholder: "Введите количество..."
               },
-              domProps: { value: recipeIngredient.pivot.ingredient_count }
+              domProps: { value: recipeIngredient.pivot.ingredient_count },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    recipeIngredient.pivot,
+                    "ingredient_count",
+                    $event.target.value
+                  )
+                }
+              }
             })
           ]),
           _vm._v(" "),

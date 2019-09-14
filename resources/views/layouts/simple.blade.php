@@ -20,10 +20,14 @@
     <link rel="stylesheet" href="/font/iconsmind/style.css" />
     <link rel="stylesheet" href="/font/simple-line-icons/css/simple-line-icons.css" />
 
-    <link rel="stylesheet" href="/css/vendor/bootstrap.min.css" />
-    <link rel="stylesheet" href="/css/vendor/bootstrap-float-label.min.css" />
+    <link rel="stylesheet" href="css/vendor/bootstrap-stars.css" />
+    <link rel="stylesheet" href="css/vendor/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/vendor/owl.carousel.min.css" />
+    <link rel="stylesheet" href="css/vendor/bootstrap-float-label.min.css" />
+    <link rel="stylesheet" href="css/vendor/bootstrap-stars.css" />
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/dore/main.css') }}" rel="stylesheet">
     @stack("styles")
 </head>
 <body class="background show-spinner">

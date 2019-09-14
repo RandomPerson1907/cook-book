@@ -20,3 +20,6 @@ Auth::routes();
 Route::resource("recipes", "RecipesController");
 Route::resource("ingredients", "IngredientsController")->except(["show"]);
 Route::post("/ingredients/updateCount", "IngredientsController@updateCount")->name("ingredient.updateCount");
+Route::get("/home", function() {
+   return redirect()->route("recipes.index");
+});

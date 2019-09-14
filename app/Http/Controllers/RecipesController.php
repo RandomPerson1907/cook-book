@@ -54,6 +54,9 @@ class RecipesController extends Controller
      */
     public function store(Request $request)
     {
+        $request->recipeIngredients = (isset($request->recipeIngredients)) ? $request->recipeIngredients : [];
+        $request->recipeIngredientsСount = (isset($request->recipeIngredientsСount)) ? $request->recipeIngredientsСount : [];
+
         $validator = Recipe::isValid($request->all());
         if (!$validator->fails()) {
             if (count($request->recipeIngredients) !== count($request->recipeIngredientsСount)) {

@@ -26,11 +26,19 @@
                 <a class="btn btn-primary button__add" href="{{ route("ingredients.create") }}">Добавить</a>
             </div>
         </div>
-        <div class="row mt-5">
+        <div class="row mt-3 data-row border-bottom pb-3">
+            <div class="col-md-8">
+                <a href="{{ route("ingredients.index") }}?orderBy=name">Название</a>
+            </div>
+            <div class="col-md-2 text-center">
+                Действия
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-11">
                 <div class="ingredients data-rows">
                     @forelse ($ingredients as $ingredient)
-                    <div class="data-row ingredient row mt-3">
+                    <div class="data-row ingredient row mt-3 border-bottom">
                         <div class="ingredient__name data-row__name col-md-9">
                             {{ $ingredient->name }}
                         </div>

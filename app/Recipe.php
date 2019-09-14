@@ -25,7 +25,7 @@ class Recipe extends Model
         return self::
             where("user_id", $request->user()->id)
             ->orderBy(isset($request->orderBy) ? $request->orderBy : "id")
-            ->paginate(isset($request->paginate) ? $request->paginate : 15);
+            ->get();
     }
 
     public static function getOne($request, $id)
