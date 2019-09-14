@@ -1,5 +1,8 @@
 <template>
     <div class="ingredients">
+        <div class="alert alert-success mt-3" role="alert" v-if="status">
+            {{ status }}
+        </div>
         <div class="row mt-5 pb-5 border-bottom" v-for="(recipeIngredient, recipeIndex) in recipeIngredients">
             <div class="col-md-5">
                 <select class="w-100 form-control" name="recipeIngredients[]">
@@ -17,8 +20,8 @@
             <div class="col-md-1">
                 <input
                     type="button"
-                    class="form-control" @click="removeRecipeIngredient(recipeIndex)"
-                ><img class="w-100 h-100" src="/img/icons/cross.png" alt="Delete">
+                    class="form-control form-control__delete" @click="removeRecipeIngredient(recipeIndex)"
+                >
             </div>
         </div>
         <div class="row mt-5 pb-5 border-bottom">
@@ -49,18 +52,20 @@
         props: ["ingredients", "route"],
         data: function() {
             return {
-                "recipeIngredients" : []
+                "recipeIngredients" : [],
+                "status" : ""
             }
         },
         methods: {
             addIngredientForm() {
-                this.recipeIngredients.push([]);
+                this.recipeIngredients.push([])
             },
             removeRecipeIngredient(recipeIndex) {
                 this.recipeIngredients.splice(recipeIndex, 1);
             },
             addIngredient(ingredient) {
                 this.ingredients.push(ingredient);
+                this.status = "Ингредиент успешно добавлен";
             }
         }
     }

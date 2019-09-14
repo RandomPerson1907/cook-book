@@ -10,12 +10,17 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Добавление нового ингредиента</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
+                        <div class="errors" v-for="error in errors">
+                            <div class="alert alert-warning mt-3" role="alert" v-for="message in error">
+                                {{ message }}
+                            </div>
+                        </div>
                         <form :action="route" method="POST">
                         <div class="row">
                             <div class="col-md-4">
@@ -48,6 +53,7 @@
         props : ["route"],
         data : function() {
           return {
+              errors : [],
               ingredientName : ""
           }
         },
@@ -57,10 +63,17 @@
                     name : this.ingredientName
                 })
                 .then((response) => {
-                    this.$emit("addIngredient", response.data.ingredient);
+                    if (response.data.result) {
+                        this.$emit("addIngredient", response.data.ingredient);
+                        $('#addNewIngredient').modal('hide')
+                    } else {
+                        this.errors = response.data.message;
+
+                        console.log(this.errors);
+                    }
                 })
                 .catch((error) => {
-
+                    this.errors = error;
                 });
             }
         }

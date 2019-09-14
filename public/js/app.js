@@ -1904,11 +1904,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AddNewIngredient",
   props: ["route"],
   data: function data() {
     return {
+      errors: [],
       ingredientName: ""
     };
   },
@@ -1919,8 +1925,17 @@ __webpack_require__.r(__webpack_exports__);
       axios.post(this.route, {
         name: this.ingredientName
       }).then(function (response) {
-        _this.$emit("addIngredient", response.data.ingredient);
-      })["catch"](function (error) {});
+        if (response.data.result) {
+          _this.$emit("addIngredient", response.data.ingredient);
+
+          $('#addNewIngredient').modal('hide');
+        } else {
+          _this.errors = response.data.message;
+          console.log(_this.errors);
+        }
+      })["catch"](function (error) {
+        _this.errors = error;
+      });
     }
   }
 });
@@ -1977,6 +1992,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Ingredients",
@@ -1986,7 +2004,8 @@ __webpack_require__.r(__webpack_exports__);
   props: ["ingredients", "route"],
   data: function data() {
     return {
-      "recipeIngredients": []
+      "recipeIngredients": [],
+      "status": ""
     };
   },
   methods: {
@@ -1998,6 +2017,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     addIngredient: function addIngredient(ingredient) {
       this.ingredients.push(ingredient);
+      this.status = "Ингредиент успешно добавлен";
     }
   }
 });
@@ -37310,41 +37330,70 @@ var render = function() {
             _c("div", { staticClass: "modal-content" }, [
               _vm._m(0),
               _vm._v(" "),
-              _c("div", { staticClass: "modal-body" }, [
-                _c("form", { attrs: { action: _vm.route, method: "POST" } }, [
-                  _c("div", { staticClass: "row" }, [
-                    _vm._m(1),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-8" }, [
-                      _c("input", {
-                        directives: [
+              _c(
+                "div",
+                { staticClass: "modal-body" },
+                [
+                  _vm._l(_vm.errors, function(error) {
+                    return _c(
+                      "div",
+                      { staticClass: "errors" },
+                      _vm._l(error, function(message) {
+                        return _c(
+                          "div",
                           {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.ingredientName,
-                            expression: "ingredientName"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          id: "ingredientInput",
-                          type: "text",
-                          placeholder: "Введите название"
-                        },
-                        domProps: { value: _vm.ingredientName },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
+                            staticClass: "alert alert-warning mt-3",
+                            attrs: { role: "alert" }
+                          },
+                          [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(message) +
+                                "\n                        "
+                            )
+                          ]
+                        )
+                      }),
+                      0
+                    )
+                  }),
+                  _vm._v(" "),
+                  _c("form", { attrs: { action: _vm.route, method: "POST" } }, [
+                    _c("div", { staticClass: "row" }, [
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-8" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.ingredientName,
+                              expression: "ingredientName"
                             }
-                            _vm.ingredientName = $event.target.value
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            id: "ingredientInput",
+                            type: "text",
+                            placeholder: "Введите название"
+                          },
+                          domProps: { value: _vm.ingredientName },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.ingredientName = $event.target.value
+                            }
                           }
-                        }
-                      })
+                        })
+                      ])
                     ])
                   ])
-                ])
-              ]),
+                ],
+                2
+              ),
               _vm._v(" "),
               _c("div", { staticClass: "modal-footer" }, [
                 _c(
@@ -37373,7 +37422,7 @@ var staticRenderFns = [
       _c(
         "h5",
         { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
-        [_vm._v("Modal title")]
+        [_vm._v("Добавление нового ингредиента")]
       ),
       _vm._v(" "),
       _c(
@@ -37426,6 +37475,17 @@ var render = function() {
     "div",
     { staticClass: "ingredients" },
     [
+      _vm.status
+        ? _c(
+            "div",
+            {
+              staticClass: "alert alert-success mt-3",
+              attrs: { role: "alert" }
+            },
+            [_vm._v("\n        " + _vm._s(_vm.status) + "\n    ")]
+          )
+        : _vm._e(),
+      _vm._v(" "),
       _vm._l(_vm.recipeIngredients, function(recipeIngredient, recipeIndex) {
         return _c("div", { staticClass: "row mt-5 pb-5 border-bottom" }, [
           _c("div", { staticClass: "col-md-5" }, [
@@ -37448,17 +37508,13 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "col-md-1" }, [
             _c("input", {
-              staticClass: "form-control",
+              staticClass: "form-control form-control__delete",
               attrs: { type: "button" },
               on: {
                 click: function($event) {
                   return _vm.removeRecipeIngredient(recipeIndex)
                 }
               }
-            }),
-            _c("img", {
-              staticClass: "w-100 h-100",
-              attrs: { src: "/img/icons/cross.png", alt: "Delete" }
             })
           ])
         ])
@@ -49941,10 +49997,21 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/sass/recipes/create.scss":
+/*!********************************************!*\
+  !*** ./resources/sass/recipes/create.scss ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ 0:
-/*!***********************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/main.scss ./resources/sass/ingredients/index.scss ./resources/sass/ingredients/edit.scss ***!
-  \***********************************************************************************************************************************************************************/
+/*!************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/main.scss ./resources/sass/ingredients/index.scss ./resources/sass/ingredients/edit.scss ./resources/sass/recipes/create.scss ***!
+  \************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -49952,7 +50019,8 @@ __webpack_require__(/*! E:\Repositories\cook-book.loc\resources\js\app.js */"./r
 __webpack_require__(/*! E:\Repositories\cook-book.loc\resources\sass\app.scss */"./resources/sass/app.scss");
 __webpack_require__(/*! E:\Repositories\cook-book.loc\resources\sass\main.scss */"./resources/sass/main.scss");
 __webpack_require__(/*! E:\Repositories\cook-book.loc\resources\sass\ingredients\index.scss */"./resources/sass/ingredients/index.scss");
-module.exports = __webpack_require__(/*! E:\Repositories\cook-book.loc\resources\sass\ingredients\edit.scss */"./resources/sass/ingredients/edit.scss");
+__webpack_require__(/*! E:\Repositories\cook-book.loc\resources\sass\ingredients\edit.scss */"./resources/sass/ingredients/edit.scss");
+module.exports = __webpack_require__(/*! E:\Repositories\cook-book.loc\resources\sass\recipes\create.scss */"./resources/sass/recipes/create.scss");
 
 
 /***/ })

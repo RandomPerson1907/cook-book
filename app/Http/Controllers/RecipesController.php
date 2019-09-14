@@ -89,7 +89,6 @@ class RecipesController extends Controller
 
                     return redirect()->route("recipes.index")->with("stats", "Рецепт успешно добавлен");
                 }
-
             }
         } else {
             return back()->withInput()->withErrors($validator->errors());

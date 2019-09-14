@@ -1,0 +1,14 @@
+.form-control__delete {
+    width: 40px;
+    height: 40px;
+    background-image: url("/img/icons/cross.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    border: none;
+    transition: all .3s ease-in-out;
+
+    &:hover {
+        border: 1px solid rgba(0,0,0,0.5);
+    }
+}
