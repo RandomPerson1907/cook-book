@@ -28,7 +28,7 @@
         </div>
         <div class="row mt-3 data-row border-bottom pb-3">
             <div class="col-md-8">
-                <a href="{{ route("ingredients.index") }}?orderBy=name">Название</a>
+                <a href="{{ route("ingredients.index") }}?orderBy=name{{ isset(request()->orderBy) ? (isset(request()->direction) && request()->direction == "ASC") ? "&direction=DESC" : "&direction=ASC" : "&direction=ASC" }}">Название</a>
             </div>
             <div class="col-md-2 text-center">
                 Действия

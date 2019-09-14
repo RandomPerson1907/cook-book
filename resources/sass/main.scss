@@ -1,3 +1,23 @@
+a,
+a:hover,
+a:active,
+a:link,
+a:visited {
+    color: #06266F;
+}
+
+.logo {
+    height: 50px;
+}
+
+.btn.btn-primary {
+    color: rgba(255,255,255,.8);
+
+    &:hover {
+        color: rgba(255,255,255,.9);
+    }
+}
+
 .data-rows {
     .data-row {
         padding: 10px;
@@ -31,6 +51,39 @@
                 }
             }
 
+        }
+    }
+}
+
+.nav-item {
+    height: 30px;
+
+    img {
+        height: 100%;
+    }
+
+    a {
+        margin-top: 5px;
+        margin-left: 10px;
+    }
+}
+
+.nav.aside {
+    margin-top: 20px;
+
+    .nav-item {
+        margin-top: 20px;
+        height: 45px;
+        background-color: rgba(0,0,0,.05);
+        border-radius: 3px;
+        transition: all .3s ease-in-out;
+
+        &:hover {
+            box-shadow: 0px 0px 3px 0px rgba(0,0,0,.3);
+        }
+
+        a {
+            color: rgba(0,0,0,.7);
         }
     }
 }

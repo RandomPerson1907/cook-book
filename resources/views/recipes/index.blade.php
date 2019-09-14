@@ -20,20 +20,20 @@
         @endif
         <div class="row">
             <div class="col-md-8">
-                <h1 class="text-left">Список рецептов</h1>
+                <h1 class="text-left">Мои рецепты</h1>
             </div>
             <div class="col-md-3 text-right">
-                <a class="btn btn-primary button__add" href="{{ route("recipes.create") }}">Добавить</a>
+                <a class="btn btn-primary button__add" href="{{ route("recipes.create") }}">Добавить рецепт</a>
             </div>
         </div>
         <div class="row mt-5">
             <div class="col-md-11">
                 <div class="row mt-3 data-row border-bottom pb-3">
                     <div class="col-md-4">
-                        <a href="{{ route("recipes.index") }}?orderBy=name">Название</a>
+                        <a href="{{ route("recipes.index") }}?orderBy=name{{ isset(request()->orderBy) ? (isset(request()->direction) && request()->direction == "ASC") ? "&direction=DESC" : "&direction=ASC" : "&direction=ASC" }}">Название</a>
                     </div>
                     <div class="col-md-5">
-                        <a href="{{ route("recipes.index") }}?orderBy=description">Описание</a>
+                        <a href="{{ route("recipes.index") }}?orderBy=description{{ isset(request()->orderBy) ? (isset(request()->direction) && request()->direction == "ASC") ? "&direction=DESC" : "&direction=ASC" : "&direction=ASC" }}">Описание</a>
                     </div>
                     <div class="col-md-3">
                         Действия

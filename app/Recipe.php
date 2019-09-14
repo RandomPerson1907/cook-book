@@ -22,9 +22,11 @@ class Recipe extends Model
 
     public static function getAll($request)
     {
+        $orderBy = isset($request->orderBy) ? $request->orderBy : "id";
+        $direction = isset($request->direction) ? ($request->direction === "ASC" || $request->direction === "DESC") ? $request->direction : "ASC" : "ASC";
         return self::
             where("user_id", $request->user()->id)
-            ->orderBy(isset($request->orderBy) ? $request->orderBy : "id")
+            ->orderBy($orderBy, $direction)
             ->get();
     }
 

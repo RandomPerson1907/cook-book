@@ -26,53 +26,36 @@
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    Кулинарная книга
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a class="" href="{{ route('logout') }}"
-                                   onclick="event.preventDefault();
+            <div class="container-fluid">
+                <div class="row w-100">
+                    <div class="offset-md-1 col-md-5">
+                        <img class="logo" src="{{ asset("/img/logo.png") }}" alt="Logotype">
+                        <a class="navbar-brand" href="{{ url('/') }}">
+                            Кулинарная книга
+                        </a>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <img src="{{ asset("/img/icons/logout.png") }}" alt="Logout">
+                        <a class="" href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                    Выйти из аккаунта
-                                </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                    @csrf
-                                </form>
-                            </li>
-                        @endguest
-                    </ul>
+                            Выход
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </div>
                 </div>
+
+
+
             </div>
         </nav>
 
         <div class="container-fluid">
             <div class="row">
                 <div class="offset-md-1 col-md-2">
-                    <ul class="nav flex-column">
+                    <ul class="nav flex-column aside">
                         <li class="nav-item text-center">
                             <a class="nav-link active" href="{{ route("recipes.index") }}">Мои рецепты</a>
                         </li>

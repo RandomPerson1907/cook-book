@@ -1,3 +1,23 @@
+a,
+a:hover,
+a:active,
+a:link,
+a:visited {
+  color: #06266F;
+}
+
+.logo {
+  height: 50px;
+}
+
+.btn.btn-primary {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.btn.btn-primary:hover {
+  color: rgba(255, 255, 255, 0.9);
+}
+
 .data-rows .data-row {
   padding: 10px;
   border-radius: 3px;
@@ -30,5 +50,38 @@
 .data-rows .data-row .data-row__action label img {
   height: 100%;
   cursor: pointer;
+}
+
+.nav-item {
+  height: 30px;
+}
+
+.nav-item img {
+  height: 100%;
+}
+
+.nav-item a {
+  margin-top: 5px;
+  margin-left: 10px;
+}
+
+.nav.aside {
+  margin-top: 20px;
+}
+
+.nav.aside .nav-item {
+  margin-top: 20px;
+  height: 45px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
+  transition: all 0.3s ease-in-out;
+}
+
+.nav.aside .nav-item:hover {
+  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.3);
+}
+
+.nav.aside .nav-item a {
+  color: rgba(0, 0, 0, 0.7);
 }
 
