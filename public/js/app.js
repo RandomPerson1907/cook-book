@@ -1995,28 +1995,47 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Ingredients",
   components: {
     AddNewIngredient: _AddNewIngredient__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  props: ["ingredients", "route"],
+  props: ["ingredients", "route", "oldIngredients", "oldIngredientsCount", "recipeIngredientsProp"],
   data: function data() {
     return {
-      "recipeIngredients": [],
-      "status": ""
+      "status": "",
+      "recipeIngredients": []
     };
+  },
+  created: function created() {
+    if (this.recipeIngredientsProp) {
+      this.recipeIngredients = this.recipeIngredientsProp;
+    }
   },
   methods: {
     addIngredientForm: function addIngredientForm() {
-      this.recipeIngredients.push([]);
+      this.recipeIngredients.push({
+        name: "",
+        pivot: {
+          ingredient_count: ""
+        }
+      });
     },
     removeRecipeIngredient: function removeRecipeIngredient(recipeIndex) {
       this.recipeIngredients.splice(recipeIndex, 1);
     },
     addIngredient: function addIngredient(ingredient) {
-      this.ingredients.push(ingredient);
+      this.ingredients.push({
+        id: ingredient.id,
+        name: ingredient.name,
+        pivot: {
+          ingredient_count: ""
+        }
+      });
       this.status = "Ингредиент успешно добавлен";
     }
   }
@@ -37496,15 +37515,32 @@ var render = function() {
                 attrs: { name: "recipeIngredients[]" }
               },
               _vm._l(_vm.ingredients, function(ingredient, index) {
-                return _c("option", { domProps: { value: ingredient.id } }, [
-                  _vm._v(_vm._s(ingredient.name))
-                ])
+                return _c(
+                  "option",
+                  {
+                    domProps: {
+                      value: ingredient.id,
+                      selected: recipeIngredient.id == ingredient.id
+                    }
+                  },
+                  [_vm._v(_vm._s(ingredient.name))]
+                )
               }),
               0
             )
           ]),
           _vm._v(" "),
-          _vm._m(0, true),
+          _c("div", { staticClass: "col-md-3" }, [
+            _c("input", {
+              staticClass: "form-control",
+              attrs: {
+                type: "text",
+                name: "recipeIngredientsСount[]",
+                placeholder: "Введите количество..."
+              },
+              domProps: { value: recipeIngredient.pivot.ingredient_count }
+            })
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-1" }, [
             _c("input", {
@@ -37533,7 +37569,7 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _vm._m(1),
+        _vm._m(0),
         _vm._v(" "),
         _c(
           "div",
@@ -37552,21 +37588,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-3" }, [
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          type: "text",
-          name: "recipeIngredientsСount[]",
-          placeholder: "Введите количество..."
-        }
-      })
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

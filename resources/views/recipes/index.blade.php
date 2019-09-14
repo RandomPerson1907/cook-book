@@ -31,13 +31,16 @@
                 <div class="ingredients data-rows">
                     @forelse ($recipes as $recipe)
                         <div class="data-row ingredient row mt-3">
-                            <div class="ingredient__name data-row__name col-md-10">
+                            <div class="ingredient__name data-row__name col-md-9">
                                 {{ $recipe->name }}
                             </div>
-                            <div class="ingredient__action data-row__action data-row__action_edit ingredient__action_edit col-md-1 text-right">
+                            <div class="recipe__action data-row__action data-row__action_show recipe__action_show col-md-1 text-right">
+                                <a href="{{ route("recipes.show", $recipe->id) }}"><img src="{{ asset("/img/icons/eye.png") }}" alt="Show"></a>
+                            </div>
+                            <div class="recipe__action data-row__action data-row__action_edit recipe__action_edit col-md-1 text-right">
                                 <a href="{{ route("recipes.edit", $recipe->id) }}"><img src="{{ asset("/img/icons/edit.png") }}" alt="Delete"></a>
                             </div>
-                            <div class="ingredient__action data-row__action ingredient__action_delete data-row__action_delete col-md-1 text-right">
+                            <div class="recipe__action data-row__action recipe__action_delete data-row__action_delete col-md-1 text-right">
                                 <form action="{{ route("recipes.destroy", $recipe->id) }}" method="POST">
                                     @csrf
                                     @method("DELETE")

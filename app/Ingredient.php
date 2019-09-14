@@ -12,7 +12,7 @@ class Ingredient extends Model
 
     public function recipes()
     {
-        return $this->belongsToMany(Recipe::class);
+        return $this->belongsToMany(Recipe::class)->withPivot('ingredient_count');
     }
 
     public function user()
@@ -43,7 +43,7 @@ class Ingredient extends Model
         return self::
         where("user_id", $request->user()->id)
             ->orderBy(isset($request->orderBy) ? $request->orderBy : "id")
-            ->paginate(isset($request->paginate) ? $request->paginate : 15);
+            ->get();
     }
 
     public static function getOne($request, $id)

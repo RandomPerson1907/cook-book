@@ -26,7 +26,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="text-left">Добавление Ингредиента</h1>
+                    <h1 class="text-left">Добавление Рецепта</h1>
                 </div>
             </div>
             <div class="row mt-5 pb-5">
@@ -58,7 +58,11 @@
                     >{{ old('description') }}</textarea>
                 </div>
             </div>
-            <ingredients :ingredients="{{ json_encode($ingredients->all()) }}" route="{{ route("ingredients.store") }}"></ingredients>
+            <ingredients
+                :oldIngredients="{{ json_encode(old('recipeIngredients')) }}"
+                :oldIngredientsCount="{{ json_encode(old('recipeIngredientsCount')) }}"
+                :ingredients="{{ json_encode($ingredients->all()) }}"
+                route="{{ route("ingredients.store") }}"></ingredients>
             <div class="row justify-content-end mt-5">
                 <div class="col-md-3">
                     <input type="submit" class="w-100 btn btn-primary" value="Сохранить рецепт">

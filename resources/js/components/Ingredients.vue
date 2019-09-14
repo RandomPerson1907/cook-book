@@ -9,13 +9,16 @@
                     <option
                         v-for="(ingredient, index) in ingredients"
                         :value="ingredient.id"
+                        :selected="recipeIngredient.id == ingredient.id"
                     >{{ ingredient.name}}</option>
                 </select>
             </div>
             <div class="col-md-3">
                 <input
                     class="form-control"
-                    type="text" name="recipeIngredientsСount[]" placeholder="Введите количество...">
+                    type="text" name="recipeIngredientsСount[]" placeholder="Введите количество..."
+                    :value="recipeIngredient.pivot.ingredient_count"
+                >
             </div>
             <div class="col-md-1">
                 <input
@@ -49,22 +52,38 @@
         components : {
             AddNewIngredient
         },
-        props: ["ingredients", "route"],
+        props: ["ingredients", "route", "oldIngredients", "oldIngredientsCount", "recipeIngredientsProp"],
         data: function() {
             return {
-                "recipeIngredients" : [],
-                "status" : ""
+                "status" : "",
+                "recipeIngredients" : []
+            }
+        },
+        created() {
+            if (this.recipeIngredientsProp) {
+                this.recipeIngredients = this.recipeIngredientsProp;
             }
         },
         methods: {
             addIngredientForm() {
-                this.recipeIngredients.push([])
+                this.recipeIngredients.push({
+                    name : "",
+                    pivot : {
+                        ingredient_count : ""
+                    }
+                });
             },
             removeRecipeIngredient(recipeIndex) {
                 this.recipeIngredients.splice(recipeIndex, 1);
             },
             addIngredient(ingredient) {
-                this.ingredients.push(ingredient);
+                this.ingredients.push({
+                    id : ingredient.id,
+                    name : ingredient.name,
+                    pivot : {
+                        ingredient_count : ""
+                    }
+                });
                 this.status = "Ингредиент успешно добавлен";
             }
         }

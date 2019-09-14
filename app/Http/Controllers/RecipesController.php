@@ -68,7 +68,7 @@ class RecipesController extends Controller
 
                 $recipe->save();
                 for ($i = 0; $i < count($request->recipeIngredients); $i++) {
-                    if (is_null($request->recipeIngredients[$i]) || is_null($request->recipeIngredientsCount[$i])) {
+                    if (is_null($request->recipeIngredients[$i]) || is_null($request->recipeIngredientsСount[$i])) {
                         $recipe->delete();
                         $errors = new MessageBag;
                         $errors->add("Ingredient count is null", "Количество ингридиента не указано");
@@ -86,9 +86,9 @@ class RecipesController extends Controller
                     $recipe->ingredients()->attach($ingredient, [
                         "ingredient_count" => $request->recipeIngredientsСount[$i]
                     ]);
-
-                    return redirect()->route("recipes.index")->with("stats", "Рецепт успешно добавлен");
                 }
+
+                return redirect()->route("recipes.index")->with("status", "Рецепт успешно добавлен");
             }
         } else {
             return back()->withInput()->withErrors($validator->errors());
@@ -109,12 +109,26 @@ class RecipesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param Request $request
+     * @param int $id
      * @return Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        //
+        $recipe = Recipe::getOne($request, $id);
+
+        if (!$recipe) {
+            $errors = new MessageBag;
+            $errors->add("Not found", "Рецепт не найден");
+            return redirect()
+                ->route("recipes.index")
+                ->withErrors($errors);
+        } else {
+            return view("recipes.edit", [
+                "ingredients" => Ingredient::getAll($request),
+                "recipe" => Recipe::getOne($request, $id)
+            ]);
+        }
     }
 
     /**
@@ -126,7 +140,57 @@ class RecipesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $recipe = Recipe::getOne($request, $id);
+        $request->recipeIngredients = (isset($request->recipeIngredients)) ? $request->recipeIngredients : [];
+        $request->recipeIngredientsСount = (isset($request->recipeIngredientsСount)) ? $request->recipeIngredientsСount : [];
+
+        if (!$recipe) {
+            $errors = new MessageBag;
+            $errors->add("Not found", "Рецепт не найден");
+            return redirect()
+                ->route("recipe.index")
+                ->withErrors($errors);
+        }
+
+        $validator = Recipe::isValid($request->all(), $id);
+        if (!$validator->fails()) {
+            if (count($request->recipeIngredients) !== count($request->recipeIngredientsСount)) {
+                $errors = new MessageBag;
+                $errors->add("Counts not equal", "Товары и их количество должны совпадать");
+                return back()->withInput()->withErrors($errors);
+            } else {
+                $recipe->name = $request->name;
+                $recipe->description = $request->description;
+                $recipe->user_id = $request->user()->id;
+
+                $recipe->ingredients()->detach();
+                for ($i = 0; $i < count($request->recipeIngredients); $i++) {
+                    if (is_null($request->recipeIngredients[$i]) || is_null($request->recipeIngredientsСount[$i])) {
+                        $errors = new MessageBag;
+                        $errors->add("Ingredient count is null", "Количество ингридиента не указано");
+                        return back()->withInput()->withErrors($errors);
+                    }
+
+                    $ingredient = Ingredient::find($request->recipeIngredients[$i]);
+
+                    if (!$ingredient) {
+                        $errors = new MessageBag;
+                        $errors->add("Ingredient not found", "Ингредиент не найден");
+                        return back()->withInput()->withErrors($errors);
+                    }
+
+                    $recipe->ingredients()->attach($ingredient, [
+                        "ingredient_count" => $request->recipeIngredientsСount[$i]
+                    ]);
+                }
+
+                $recipe->save();
+
+                return redirect()->route("recipes.index")->with("status", "Рецепт успешно обновлен");
+            }
+        } else {
+            return back()->withInput()->withErrors($validator->errors());
+        }
     }
 
     /**
@@ -145,7 +209,7 @@ class RecipesController extends Controller
             return back()->withInput()->withErrors($errors);
         } else {
             $recipe->delete();
-            return redirect()->route("recipes.index")->with("stats", "Рецепт успешно удален");
+            return redirect()->route("recipes.index")->with("status", "Рецепт успешно удален");
         }
     }
 }
