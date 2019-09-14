@@ -1,0 +1,8 @@
+body {
+  background-image: url("/img/backgrounds/balloon.jpg");
+}
+
+body .card {
+  margin-top: 30vh;
+}
+

@@ -50276,6 +50276,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/sass/auth/login.scss":
+/*!****************************************!*\
+  !*** ./resources/sass/auth/login.scss ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ "./resources/sass/ingredients/edit.scss":
 /*!**********************************************!*\
   !*** ./resources/sass/ingredients/edit.scss ***!
@@ -50332,9 +50343,9 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ 0:
-/*!***********************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/main.scss ./resources/sass/ingredients/index.scss ./resources/sass/ingredients/edit.scss ./resources/sass/recipes/create.scss ./resources/sass/recipes/show.scss ***!
-  \***********************************************************************************************************************************************************************************************************************************************/
+/*!********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/main.scss ./resources/sass/ingredients/index.scss ./resources/sass/ingredients/edit.scss ./resources/sass/recipes/create.scss ./resources/sass/recipes/show.scss ./resources/sass/auth/login.scss ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -50344,7 +50355,8 @@ __webpack_require__(/*! E:\Repositories\cook-book.loc\resources\sass\main.scss *
 __webpack_require__(/*! E:\Repositories\cook-book.loc\resources\sass\ingredients\index.scss */"./resources/sass/ingredients/index.scss");
 __webpack_require__(/*! E:\Repositories\cook-book.loc\resources\sass\ingredients\edit.scss */"./resources/sass/ingredients/edit.scss");
 __webpack_require__(/*! E:\Repositories\cook-book.loc\resources\sass\recipes\create.scss */"./resources/sass/recipes/create.scss");
-module.exports = __webpack_require__(/*! E:\Repositories\cook-book.loc\resources\sass\recipes\show.scss */"./resources/sass/recipes/show.scss");
+__webpack_require__(/*! E:\Repositories\cook-book.loc\resources\sass\recipes\show.scss */"./resources/sass/recipes/show.scss");
+module.exports = __webpack_require__(/*! E:\Repositories\cook-book.loc\resources\sass\auth\login.scss */"./resources/sass/auth/login.scss");
 
 
 /***/ })
